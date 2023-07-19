@@ -1,0 +1,4 @@
+.venv
+output
+config.yml
+geckodriver.log
