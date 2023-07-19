@@ -1,6 +1,6 @@
 # Qobuz Playlist Script
 
-Get all track urls from a given qobuz playlist (public), also able to download using slavartdl
+Get all track urls from a given qobuz playlist, also able to download using slavartdl
 
 Only supports play.qobuz.com domain and you must have a qobuz account  
 Only supports firefox for now, because thats the browser i use :)
