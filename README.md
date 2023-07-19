@@ -13,4 +13,5 @@ Only supports firefox for now, because thats the browser i use :)
 - Rename config.yml.sample to config.yml and configure it
 - Run the script `python main.py`
 
-You can find all the collected tracks urls in the output/tracks.txt file
+You can find all the collected tracks urls in the output/tracks.txt file  
+Some tracks might fail to download due to geo restrictions or other issues on qobuz/slavart end

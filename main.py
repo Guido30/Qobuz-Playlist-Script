@@ -132,11 +132,19 @@ def main():
         raise Exception("Invalid output directory!")
 
     download_counter = 0
+    downloads_failed = []
 
     for url in track_urls:
         download_counter += 1
         print("Downloading {:>3} / {:<3}".format(download_counter, tracks_total), end="\r", flush=True)
-        subprocess.run([str(slavartdl), "download", url, "-o", str(output_path), "-c", "-d"], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        cmd = subprocess.run([str(slavartdl), "download", url, "-o", str(output_path), "-c", "-d"], stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+        cmd_stderr = cmd.stderr.decode()
+        if "Error" in cmd_stderr:
+            downloads_failed.append(url)
+
+    if downloads_failed:
+        print("Slavartdl failed while downloading these tracks:")
+        print("\n".join(downloads_failed))
 
 
 if __name__ == "__main__":
