@@ -13,7 +13,7 @@ import subprocess
 
 
 def main():
-    def grab_track_from_element(element, track_urls):
+    def grab_track_from_element(element, track_urls) -> str:
 
         track_action = element.find_element(By.CSS_SELECTOR, "span.track-action")
         track_action.click()
@@ -35,6 +35,8 @@ def main():
 
         close_button = modal_content.find_element(By.CSS_SELECTOR, "button.close")
         close_button.click()
+
+        return value
 
     options = Options()
     options.add_argument("-headless")
@@ -95,12 +97,25 @@ def main():
         grab_track_from_element(draggable_item, track_urls)
         print("Fetching {:^3} / {:^3}".format(len(track_urls), tracks_total), end="\r", flush=True)
 
+    previous_last_urls = []
+    repeated_urls_counter = 0
     while len(track_urls) < tracks_total:
+        current_last_urls = []
         draggable_items = wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, "div.playlist-tracks-list li.draggable-item")))[-3:]
 
         for draggable_item in draggable_items:
-            grab_track_from_element(draggable_item, track_urls)
+            url = grab_track_from_element(draggable_item, track_urls)
+            current_last_urls.append(url)
             print("Fetching {:>3} / {:<3}".format(len(track_urls), tracks_total), end="\r", flush=True)
+
+        if current_last_urls == previous_last_urls:
+            repeated_urls_counter += 1
+
+        if repeated_urls_counter == 3:
+            print(f"\nFound {tracks_total - len(track_urls)} duplicates")
+            break
+
+        previous_last_urls = current_last_urls
 
     print("")
 
