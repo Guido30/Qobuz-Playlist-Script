@@ -5,6 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 import sys
+import os
 import re
 import yaml
 import shutil
@@ -118,6 +119,9 @@ def main():
         previous_last_urls = current_last_urls
 
     print("")
+
+    if not os.path.exists("output"):
+        os.makedirs("output")
 
     with open("output/tracks.txt", "w") as f:
         f.write("\n".join(track_urls))
