@@ -2,8 +2,7 @@
 
 This simple script retrieves all track urls in a given qobuz playlist
 
-Only supports play.qobuz.com links and you must provide a qobuz account  
-Only supports firefox because im lazy :)
+Only supports play.qobuz.com links and you must provide a qobuz account
 
 ## Usage
 

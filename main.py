@@ -90,17 +90,19 @@ def main():
     submit_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'button[name="login"]')))
     submit_button.click()
 
-    time.sleep(5)
+    print("Waiting captcha...")
 
     track_urls = []
 
     try:
-        playlist_info = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "p.header-page__playlist-tracks")))
+        playlist_info = WebDriverWait(driver, 300).until(EC.presence_of_element_located((By.CSS_SELECTOR, "p.header-page__playlist-tracks")))
         playlist_info = playlist_info.get_attribute("innerHTML")
         print("Logged in!")
     except TimeoutException:
         print("Error getting playlist information, login failed?")
         sys.exit(0)
+
+    time.sleep(5)
 
     tracks_total = int(re.search(r"\b\d+\b", playlist_info).group())
 
@@ -130,12 +132,12 @@ def main():
 
         previous_last_urls = current_last_urls
 
-    driver.quit()
+    driver.close()
 
     with open("output/tracks.txt", "w") as f:
         f.write("\n".join(track_urls))
 
-    print("Urls saved!")
+    print("\nUrls saved!")
 
 if __name__ == "__main__":
     main()
